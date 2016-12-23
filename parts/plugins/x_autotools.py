@@ -45,7 +45,7 @@ import stat
 import snapcraft
 
 
-class AutotoolsPlugin(snapcraft.BasePlugin):
+class XAutotoolsPlugin(snapcraft.BasePlugin):
 
     @classmethod
     def schema(cls):
@@ -93,7 +93,7 @@ class AutotoolsPlugin(snapcraft.BasePlugin):
 
     def build(self):
         super().build()
-        if not os.path.exists(os.path.join(self.builddir, "configure")):
+        if not os.path.exists(os.path.join(self.builddir, "auto/configure")):
             generated = False
             scripts = ["autogen.sh", "bootstrap"]
             for script in scripts:
@@ -112,7 +112,7 @@ class AutotoolsPlugin(snapcraft.BasePlugin):
             if not generated:
                 self.run(['autoreconf', '-i'])
 
-        configure_command = ['./configure']
+        configure_command = ['./auto/configure']
         make_install_command = ['make', 'install']
 
         if self.install_via_destdir:
